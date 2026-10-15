@@ -11,7 +11,6 @@ SCENARIOS = {
         "failure_mode": "THREADPOOL_EXHAUSTION",
         "affected_services": [
             {"service_id": "auth-service", "metric": "threadpool.active_threads", "value": 99.8},
-            {"service_id": "session-mgr", "metric": "http.5xx_rate", "value": 14.2},
             {"service_id": "web-frontend", "metric": "http.latency_p99_ms", "value": 1820.0},
             {"service_id": "mobile-bff", "metric": "http.latency_p99_ms", "value": 2100.0},
             {"service_id": "cart-service", "metric": "http.5xx_rate", "value": 8.5},
@@ -81,7 +80,7 @@ def inject_fault(scenario_id: str, graph_name: str = "tenant_a") -> Dict[str, An
 
     # 1. Clean previous active alerts & active incident
     g.query("MATCH (a:Alert) DETACH DELETE a")
-    g.query("MATCH (i:Incident {status: 'active'}) DETACH DELETE i")
+    g.query("MATCH (i:Incident) WHERE i.status = 'active' OR i.id STARTS WITH 'inc_active' DETACH DELETE i")
 
     # 2. Create Active Incident node
     incident_id = f"inc_active_{scenario_id}"

@@ -121,9 +121,11 @@ CALLS_SPEC = [
     ("preference-store", "postgres-replica-2", 7.0),
 
     # Commerce & Checkout Flow
+    ("cart-service", "auth-service", 15.0),
     ("cart-service", "catalog-service", 18.0),
     ("cart-service", "pricing-engine", 14.0),
     ("cart-service", "redis-cluster-master", 3.0),
+    ("checkout-service", "auth-service", 16.0),
     ("checkout-service", "cart-service", 25.0),
     ("checkout-service", "order-processor", 40.0),
     ("checkout-service", "tax-calculator", 20.0),

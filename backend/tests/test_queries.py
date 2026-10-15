@@ -49,6 +49,7 @@ def test_rule_outs_path_absence():
     MATCH (candidate:Service)
     WHERE NOT candidate.id IN reachable_ids
     RETURN candidate.id AS ruled_out_id
+    ORDER BY candidate.tier ASC, candidate.id ASC
     LIMIT 10
     """
     alerts = ["cart-service"]
