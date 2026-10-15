@@ -75,10 +75,19 @@ export const App: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ scenario_id: selectedScenario })
       });
-      const data = await res.json();
       if (res.ok) {
         setHasActiveIncident(true);
         await fetchTopology();
+        // Immediately run diagnosis to highlight root cause, blast radius, and rule-outs
+        const diagRes = await fetch('/api/diagnose', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ graph_mode: graphMode })
+        });
+        const diagData = await diagRes.json();
+        if (diagRes.ok) {
+          setDiagnosis(diagData);
+        }
       }
     } catch (err) {
       console.error('Inject failed', err);

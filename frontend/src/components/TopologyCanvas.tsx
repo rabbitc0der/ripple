@@ -185,6 +185,13 @@ export const TopologyCanvas: React.FC<TopologyCanvasProps> = ({
         const node = evt.target;
         onSelectNode(node.id());
       });
+
+      setTimeout(() => {
+        if (cyRef.current) {
+          cyRef.current.resize();
+          cyRef.current.fit(undefined, 30);
+        }
+      }, 50);
     } else {
       // Smoothly update elements in-place
       cyRef.current.elements().remove();
@@ -196,12 +203,14 @@ export const TopologyCanvas: React.FC<TopologyCanvasProps> = ({
         padding: 30,
         animate: false
       }).run();
+      cyRef.current.resize();
+      cyRef.current.fit(undefined, 30);
     }
   }, [nodes, edges, rootCauseId, blastRadiusIds, ruledOutIds, alertingIds]);
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%', minHeight: '520px', borderRadius: '12px', overflow: 'hidden' }}>
-      <div ref={containerRef} style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }} />
+      <div ref={containerRef} style={{ width: '100%', height: '100%', minHeight: '520px' }} />
 
       {/* Floating Canvas Legend */}
       <div 

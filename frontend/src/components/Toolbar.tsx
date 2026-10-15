@@ -94,7 +94,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         {/* Diagnose Button */}
         <button
           onClick={onDiagnose}
-          disabled={isDiagnosing || !hasActiveIncident}
+          disabled={isDiagnosing}
           className="btn btn-primary"
           style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
         >
